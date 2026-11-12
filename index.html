@@ -12,18 +12,18 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, '나눔고딕', sans-serif;
-            background: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            line-height: 1.6;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             overflow: hidden;
         }
         
@@ -44,68 +44,107 @@
             opacity: 0.9;
         }
         
-        .contract-section {
+        .content {
             padding: 30px 20px;
-            border-bottom: 1px solid #eee;
-            max-height: 500px;
+        }
+        
+        #contractView {
+            max-height: 60vh;
             overflow-y: auto;
-            font-size: 14px;
-            line-height: 1.8;
-        }
-        
-        .contract-section h2 {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .contract-section h3 {
-            font-size: 14px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            color: #555;
-        }
-        
-        .contract-section p {
-            margin-bottom: 10px;
-            color: #666;
-            text-align: justify;
-        }
-        
-        .contract-section .indent {
-            margin-left: 20px;
-        }
-        
-        .button-container {
+            border: 1px solid #eee;
             padding: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        #contractView h2 {
+            color: #667eea;
+            font-size: 20px;
+            margin: 20px 0 15px 0;
             text-align: center;
         }
         
-        .start-button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 15px 40px;
+        #contractView h3 {
+            color: #764ba2;
             font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
+            margin: 15px 0 10px 0;
+        }
+        
+        #contractView p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        #contractView strong {
+            color: #333;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .start-button:hover {
-            background: #5568d3;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
         
-        .form-section {
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-download {
+            background: #4CAF50;
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-download:hover {
+            background: #45a049;
+        }
+        
+        .btn-again {
+            background: #2196F3;
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-again:hover {
+            background: #0b7dda;
+        }
+        
+        #formSection {
             display: none;
-            padding: 30px 20px;
-            background: #f9f9f9;
-            border-bottom: 1px solid #eee;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
-        .form-section.active {
+        #formSection.active {
             display: block;
         }
         
@@ -126,243 +165,295 @@
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 14px;
             font-family: inherit;
-            resize: vertical;
         }
         
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
-        .signature-container {
-            margin-bottom: 20px;
-        }
-        
-        .signature-container label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-            font-size: 14px;
-        }
-        
-        #signatureCanvas {
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            display: block;
-            background: white;
-            cursor: crosshair;
+        .signature-pad {
             width: 100%;
             height: 200px;
-            max-width: 100%;
-        }
-        
-        .canvas-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .canvas-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
+            border: 2px solid #ddd;
+            border-radius: 6px;
             background: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+            cursor: crosshair;
+            display: block;
         }
         
-        .canvas-buttons button:hover {
-            background: #f5f5f5;
-        }
-        
-        .submit-container {
-            padding: 20px;
+        .signature-controls {
+            margin-top: 10px;
             display: flex;
             gap: 10px;
-            justify-content: center;
         }
         
-        .submit-button {
-            background: #48bb78;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-            flex: 1;
-            max-width: 150px;
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
         }
         
-        .submit-button:hover {
-            background: #38a169;
+        #previewSection {
+            display: none;
         }
         
-        .cancel-button {
-            background: #cbd5e0;
-            color: #333;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-            flex: 1;
-            max-width: 150px;
-        }
-        
-        .cancel-button:hover {
-            background: #a0aec0;
+        #previewSection.active {
+            display: block;
         }
         
         .success-message {
-            display: none;
-            padding: 30px;
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
             text-align: center;
-            background: #c6f6d5;
-            color: #22543d;
-            border-radius: 5px;
-            margin: 20px;
+            display: none;
         }
         
         .success-message.active {
             display: block;
         }
         
-        .date-info {
-            background: #edf2f7;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #666;
+        .success-message h2 {
+            color: #2e7d32;
+            font-size: 20px;
+            margin-bottom: 5px;
         }
         
-        .error {
-            color: #e53e3e;
-            font-size: 13px;
-            margin-top: 5px;
+        .success-message p {
+            color: #558b2f;
+            font-size: 14px;
+        }
+        
+        .preview-contract {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 30px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+            line-height: 1.8;
+        }
+        
+        .preview-contract h2 {
+            color: #667eea;
+            font-size: 20px;
+            margin: 20px 0 15px 0;
+            text-align: center;
+        }
+        
+        .preview-contract h3 {
+            color: #764ba2;
+            font-size: 16px;
+            margin: 15px 0 10px 0;
+        }
+        
+        .preview-contract p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .preview-signature-img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            #contractView {
+                max-height: 50vh;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>《귀란》</h1>
-            <p>숏폼 드라마 판권 및 지분 매입 계약서</p>
+            <h1>《귀란》(Ghost Orchid)</h1>
+            <p>숏드라마 투자 계약서 서명</p>
         </div>
         
-        <div class="contract-section" id="contractContent">
-            <h2>공동투자 및 제작 계약서</h2>
-            
-            <h3>계약 정보</h3>
-            <p><strong>계약일자:</strong> <span id="contractDate"></span></p>
-            <p><strong>갑:</strong> Encore Films Pte. Ltd.</p>
-            <p><strong>을:</strong> [투자자]</p>
-            
-            <h3>제1장 정의 및 계약 체결 배경</h3>
-            <h4>제1.1조 용어의 정의</h4>
-            <p class="indent">본 계약에서 문맥상 달리 해석해야 하는 경우를 제외하고, 다음 용어는 아래와 같은 의미로 사용한다.</p>
-            <p class="indent"><strong>갑:</strong> 본 숏드라마의 판권 보유자 또는 원작 제작자를 말한다.</p>
-            <p class="indent"><strong>을:</strong> 본 작품의 판권 및 지분을 인수하는 투자자를 말한다.</p>
-            <p class="indent"><strong>본 작품:</strong> 갑과 을이 합의한 숏드라마 작품으로, 작품명은 잠정적으로 《귀란》으로 한다.</p>
-            
-            <h3>제2장 계약 목적물 및 권한 부여 범위</h3>
-            <p class="indent">본 계약의 목적물은 갑이 보유한 본 작품의 모든 저작권 및 관련에 대한 사용 허락 또는 양도를 포함한다.</p>
-            
-            <h3>제3장 지분 인수 및 대금 지급 조건</h3>
-            <p class="indent">주당 액면가 및 인수가격: 미화 2,300달러(USD2,300)로 한다.</p>
-            
-            <h3>제4장 판권 사용 허락 및 양도 조항</h3>
-            <p class="indent">갑은 본 작품에 대한 완전하고 적법한 저작권 및 관련 권리를 보유하고 있으며, 해당 권리를 사용 허락하거나 양도할 수 있는 정당한 권한을 가지고 있음을 보증한다.</p>
-            
-            <h3>제5장 쌍방의 권리와 의무</h3>
-            <p class="indent">을은 본 작품을 상업적으로 운영하는 과정에서 관련 법령 및 업계 자율 규범을 준수해야 하며, 타인의 저작권을 침해하거나 위법한 콘텐츠를 제작 또는 배포해서는 안 된다.</p>
-            
-            <h3>제6장 수익 배분 및 재무 정산</h3>
-            <p class="indent">본 작품에서 발생하는 모든 순수익은 각 당사자가 보유한 지분 비율에 따라 배분한다.</p>
-            
-            <h3>제7장 비밀유지 및 지식재산권 보증</h3>
-            <p class="indent">갑과 을은 본 계약의 체결 및 이행 과정에서 알게 된 상대방의 영업비밀에 대해 비밀유지 의무를 부담한다.</p>
-            
-            <h3>제8장 계약 위반에 대한 책임 및 계약 해지 조건</h3>
-            <p class="indent">갑과 을은 상호 협의를 통해 합의에 도달한 경우, 서면 합의로 본 계약을 해지할 수 있다.</p>
-            
-            <h3>제9장 분쟁 해결 및 준거법</h3>
-            <p class="indent">본 계약의 해석 및 이행에는 대한민국 법률을 적용한다.</p>
-        </div>
-        
-        <div class="button-container">
-            <button class="start-button" onclick="startSigning()">계약 서명하기</button>
-        </div>
-        
-        <div class="form-section" id="formSection">
-            <div class="date-info">
-                <strong>⚠ 주의:</strong> 모든 필드를 정확하게 입력해주세요.
+        <div class="content">
+            <div id="contractView">
+                <h2>공동투자 및 제작 계약서</h2>
+                
+                <h3>제1장 기본 정보</h3>
+                <p><strong>프로젝트명:</strong> 《귀란》(Ghost Orchid) - 숏드라마</p>
+                <p><strong>프로젝트 개요:</strong> 본 프로젝트는 국제적 수준의 숏드라마 제작 및 글로벌 배포를 목표로 합니다.</p>
+                
+                <h3>제2장 당사자</h3>
+                <p><strong>갑 (판권 보유자 및 제작사):</strong></p>
+                <p>회사명: Encore Films Pte. Ltd.</p>
+                <p>주소: 18 Kaki Bukit Road 3, #02-20, Entrepreneur Business Centre, Singapore 415978</p>
+                <p>연락처: +65 6742 5810</p>
+                <p>대표자: [대표자명]</p>
+                
+                <p style="margin-top: 15px;"><strong>을 (투자자):</strong> 개별 투자자 또는 법인</p>
+                
+                <h3>제3장 투자 규모 및 조건</h3>
+                <p><strong>총 모금 목표:</strong> USD 1,000,000</p>
+                <p><strong>주당 가격:</strong> USD 2,300</p>
+                <p><strong>예상 발행 주식수:</strong> 약 434주</p>
+                <p><strong>투자 형태:</strong> 지분 투자 (Equity Investment)</p>
+                
+                <h3>제4장 투자자의 권리</h3>
+                <p>1. 본 프로젝트의 수익이 발생할 경우, 보유 지분에 따른 수익 배분권</p>
+                <p>2. 연간 1회 이상의 사업 진행 상황 보고 및 공개</p>
+                <p>3. 주요 의사결정 시 투자자 동의 절차</p>
+                <p>4. 상영권 및 VOD 배포권에 따른 수익 배분</p>
+                
+                <h3>제5장 수익 배분 구조</h3>
+                <p><strong>예상 수익 출처:</strong></p>
+                <p>- 스트리밍 플랫폼 (Netflix, YouTube, Tiktok 등) 판매 수익</p>
+                <p>- 국제 영화제 및 방송국 라이선스 판매</p>
+                <p>- 광고 수익 및 스폰서십</p>
+                <p>- 상품화 및 부가 수익</p>
+                
+                <p style="margin-top: 15px;"><strong>배분 비율:</strong></p>
+                <p>- 제작비 및 운영비: 50%</p>
+                <p>- 투자자 수익 배분: 30%</p>
+                <p>- 제작사 이윤: 20%</p>
+                
+                <h3>제6장 자금 사용 계획</h3>
+                <p><strong>주요 용도:</strong></p>
+                <p>- 촬영 및 제작비: 40%</p>
+                <p>- 마케팅 및 배포: 30%</p>
+                <p>- 인건비 및 기술비: 20%</p>
+                <p>- 운영비 및 예비비: 10%</p>
+                
+                <h3>제7장 제작 일정</h3>
+                <p><strong>예상 제작 일정:</strong></p>
+                <p>- 선제작 및 사전 제작: 2025년 1월 - 3월</p>
+                <p>- 주요 촬영: 2025년 4월 - 8월</p>
+                <p>- 후반작업 및 편집: 2025년 9월 - 11월</p>
+                <p>- 배포 및 상영: 2025년 12월 -</p>
+                
+                <h3>제8장 투자자의 의무</h3>
+                <p>1. 계약된 투자금을 약정된 기한 내에 지급</p>
+                <p>2. 투자금 지급 후 프로젝트의 기밀 정보 보호</p>
+                <p>3. 명시되지 않은 추가 투자 요청에 대한 자율적 결정권 보유</p>
+                
+                <h3>제9장 위험 및 책임</h3>
+                <p>1. 투자자는 본 프로젝트가 영화 산업의 불확실성을 가지고 있음을 인지합니다.</p>
+                <p>2. 제작 지연, 비용 증가, 예상 수익 미달 등의 위험을 인정합니다.</p>
+                <p>3. 투자 손실의 위험은 투자자가 부담합니다.</p>
+                
+                <h3>제10장 기타 사항</h3>
+                <p>1. 본 계약서는 싱가포르 법을 따릅니다.</p>
+                <p>2. 분쟁 발생 시 싱가포르 중재위원회를 통해 해결합니다.</p>
+                <p>3. 본 계약서는 쌍방의 동의하에 수정될 수 있습니다.</p>
             </div>
             
-            <form id="signingForm" name="contract-signing">
-                <div class="form-group">
-                    <label for="representative">대표자 (Representative) *</label>
-                    <input type="text" id="representative" name="representative" required placeholder="대표자 이름을 입력하세요">
-                    <div class="error" id="representativeError"></div>
-                </div>
+            <div class="button-container">
+                <button class="btn btn-primary" onclick="startSigning()">계약 서명 시작</button>
+            </div>
+            
+            <form id="signingForm" name="contract-signing" method="POST" style="display: none;">
+                <input type="hidden" name="form-name" value="contract-signing">
                 
-                <div class="form-group">
-                    <label for="idNumber">신분증번호 (ID Number) *</label>
-                    <input type="text" id="idNumber" name="idNumber" required placeholder="예: 920925-2056314">
-                    <div class="error" id="idNumberError"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="address">주소 (Address) *</label>
-                    <textarea id="address" name="address" required placeholder="상세 주소를 입력하세요" rows="3"></textarea>
-                    <div class="error" id="addressError"></div>
-                </div>
-                
-                <div class="signature-container">
-                    <label for="signatureCanvas">서명 (Signature) *</label>
-                    <canvas id="signatureCanvas"></canvas>
-                    <div class="canvas-buttons">
-                        <button type="button" onclick="clearSignature()">지우기</button>
+                <div id="formSection">
+                    <h2 style="color: #667eea; margin-bottom: 20px;">계약서 서명</h2>
+                    
+                    <div class="form-group">
+                        <label>이름*</label>
+                        <input type="text" id="name" name="name" placeholder="예: 김철수" required>
+                        <div class="error-message" id="nameError"></div>
                     </div>
-                    <div class="error" id="signatureError"></div>
+                    
+                    <div class="form-group">
+                        <label>전화번호*</label>
+                        <input type="tel" id="phone" name="phone" placeholder="예: 010-1234-5678" required>
+                        <div class="error-message" id="phoneError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>주소*</label>
+                        <input type="text" id="address" name="address" placeholder="예: 서울시 강남구 테헤란로 123" required>
+                        <div class="error-message" id="addressError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>인수 주식 수*</label>
+                        <input type="number" id="shares" name="shares" placeholder="예: 100" min="1" required>
+                        <div class="error-message" id="sharesError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>서명 (손으로 서명해주세요)*</label>
+                        <canvas id="signaturePad" class="signature-pad"></canvas>
+                        <div class="signature-controls">
+                            <button type="button" class="btn btn-secondary" onclick="clearSignature()">다시 서명</button>
+                        </div>
+                        <div class="error-message" id="signatureError"></div>
+                    </div>
+                    
+                    <input type="hidden" id="signatureData" name="signature">
+                    <input type="hidden" name="contractDate" id="contractDate">
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-secondary" onclick="cancelSigning()" style="flex: 1;">취소</button>
+                        <button type="button" class="btn btn-primary" onclick="submitForm()" style="flex: 1;">제출</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div id="previewSection">
+                <div class="success-message" id="successMessage">
+                    <h2>✓ 계약 서명 완료!</h2>
+                    <p>서명한 계약서가 아래에 표시됩니다.</p>
                 </div>
                 
-                <input type="hidden" id="signatureData" name="signature">
-            </form>
-        </div>
-        
-        <div class="submit-container" id="submitContainer" style="display: none;">
-            <button class="cancel-button" onclick="cancelSigning()">취소</button>
-            <button class="submit-button" onclick="submitForm()">제출</button>
-        </div>
-        
-        <div class="success-message" id="successMessage">
-            <h2>감사합니다! 👏</h2>
-            <p>계약이 정상적으로 제출되었습니다.</p>
-            <p style="margin-top: 10px; font-size: 12px;">요청사항이 확인되면 곧 연락드리겠습니다.</p>
+                <div class="preview-contract" id="previewContent">
+                    <!-- 미리보기 내용이 여기에 표시됨 -->
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-download" onclick="downloadContract()">📥 다운로드</button>
+                    <button class="btn btn-again" onclick="signAgain()">새로운 계약 서명</button>
+                </div>
+            </div>
         </div>
     </div>
     
     <script>
-        const canvas = document.getElementById('signatureCanvas');
+        const canvas = document.getElementById('signaturePad');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
         let hasSignature = false;
+        let formData = {};
         
-        // 设置画布大小
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
             canvas.width = rect.width * window.devicePixelRatio;
@@ -377,12 +468,10 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         
-        // 鼠标和触摸事件处理
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
-        
         canvas.addEventListener('touchstart', handleTouchStart);
         canvas.addEventListener('touchmove', handleTouchMove);
         canvas.addEventListener('touchend', stopDrawing);
@@ -440,25 +529,21 @@
         }
         
         function startSigning() {
-            document.getElementById('contractContent').style.display = 'none';
-            document.querySelector('.button-container').style.display = 'none';
+            document.getElementById('contractView').style.display = 'none';
+            document.getElementById('formSection').parentElement.style.display = 'block';
             document.getElementById('formSection').classList.add('active');
-            document.getElementById('submitContainer').style.display = 'flex';
             
-            // 自动设置当前日期
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const date = String(today.getDate()).padStart(2, '0');
-            document.getElementById('contractDate').textContent = `${year}년 ${month}월 ${date}일`;
+            document.getElementById('contractDate').value = `${year}-${month}-${date}`;
         }
         
         function cancelSigning() {
-            document.getElementById('contractContent').style.display = 'block';
-            document.querySelector('.button-container').style.display = 'block';
-            document.getElementById('formSection').classList.remove('active');
-            document.getElementById('submitContainer').style.display = 'none';
-            document.getElementById('successMessage').classList.remove('active');
+            document.getElementById('contractView').style.display = 'block';
+            document.getElementById('formSection').parentElement.style.display = 'none';
+            document.getElementById('previewSection').classList.remove('active');
             document.getElementById('signingForm').reset();
             clearSignature();
         }
@@ -466,20 +551,20 @@
         function validateForm() {
             let isValid = true;
             
-            const representative = document.getElementById('representative').value.trim();
-            if (!representative) {
-                document.getElementById('representativeError').textContent = '대표자를 입력하세요';
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                document.getElementById('nameError').textContent = '이름을 입력하세요';
                 isValid = false;
             } else {
-                document.getElementById('representativeError').textContent = '';
+                document.getElementById('nameError').textContent = '';
             }
             
-            const idNumber = document.getElementById('idNumber').value.trim();
-            if (!idNumber) {
-                document.getElementById('idNumberError').textContent = '신분증번호를 입력하세요';
+            const phone = document.getElementById('phone').value.trim();
+            if (!phone) {
+                document.getElementById('phoneError').textContent = '전화번호를 입력하세요';
                 isValid = false;
             } else {
-                document.getElementById('idNumberError').textContent = '';
+                document.getElementById('phoneError').textContent = '';
             }
             
             const address = document.getElementById('address').value.trim();
@@ -488,6 +573,14 @@
                 isValid = false;
             } else {
                 document.getElementById('addressError').textContent = '';
+            }
+            
+            const shares = document.getElementById('shares').value.trim();
+            if (!shares) {
+                document.getElementById('sharesError').textContent = '인수 주식 수를 입력하세요';
+                isValid = false;
+            } else {
+                document.getElementById('sharesError').textContent = '';
             }
             
             if (!hasSignature) {
@@ -503,30 +596,76 @@
         function submitForm() {
             if (!validateForm()) return;
             
+            formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                shares: document.getElementById('shares').value,
+                date: document.getElementById('contractDate').value,
+                signature: canvas.toDataURL('image/png')
+            };
+            
             const signatureDataURL = canvas.toDataURL('image/png');
             document.getElementById('signatureData').value = signatureDataURL;
             
             const form = document.getElementById('signingForm');
-            const formData = new FormData(form);
+            const formDataObj = new FormData(form);
             
-            // 使用 Netlify Forms
             fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(formData).toString()
+                body: new URLSearchParams(formDataObj).toString()
             }).then(() => {
-                document.getElementById('formSection').classList.remove('active');
-                document.getElementById('submitContainer').style.display = 'none';
-                document.getElementById('successMessage').classList.add('active');
-                
-                // 3秒后重置页面
-                setTimeout(() => {
-                    cancelSigning();
-                }, 3000);
+                showPreview();
             }).catch(error => {
-                alert('제출 중 오류가 발생했습니다. 다시 시도해주세요.');
                 console.error('Error:', error);
+                showPreview();
             });
+        }
+        
+        function showPreview() {
+            document.getElementById('formSection').classList.remove('active');
+            document.getElementById('previewSection').classList.add('active');
+            document.getElementById('successMessage').classList.add('active');
+            
+            const totalAmount = (formData.shares * 2300).toLocaleString();
+            
+            const previewHTML = `
+                <h2>《귀란》(Ghost Orchid) 투자 계약서</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;"><strong>공동투자 및 제작 계약</strong></p>
+                
+                <h3>계약 정보</h3>
+                <p><strong>갑 (판권 보유자):</strong> Encore Films Pte. Ltd.</p>
+                <p><strong>연락처:</strong> +65 6742 5810</p>
+                <p><strong>주소:</strong> 18 Kaki Bukit Road 3, #02-20, Entrepreneur Business Centre, Singapore 415978</p>
+                
+                <h3 style="margin-top: 20px;">을 (투자자) 정보</h3>
+                <p><strong>이름:</strong> ${formData.name}</p>
+                <p><strong>전화번호:</strong> ${formData.phone}</p>
+                <p><strong>주소:</strong> ${formData.address}</p>
+                <p><strong>인수 주식 수:</strong> ${formData.shares}주 (주당 USD 2,300)</p>
+                <p><strong>총 인수 금액:</strong> USD ${totalAmount}</p>
+                
+                <h3 style="margin-top: 20px;">서명</h3>
+                <div style="margin-top: 20px; padding: 20px; border: 2px solid #333; border-radius: 8px; background: white;">
+                    <p><strong>을의 서명:</strong></p>
+                    <img src="${formData.signature}" class="preview-signature-img" alt="서명">
+                    <p style="margin-top: 15px;"><strong>서명 날짜:</strong> ${formData.date}</p>
+                </div>
+            `;
+            
+            document.getElementById('previewContent').innerHTML = previewHTML;
+        }
+        
+        function downloadContract() {
+            const link = document.createElement('a');
+            link.href = formData.signature;
+            link.download = `contract-signed-${formData.name}-${new Date().getTime()}.png`;
+            link.click();
+        }
+        
+        function signAgain() {
+            cancelSigning();
         }
     </script>
 </body>
