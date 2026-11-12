@@ -18,6 +18,20 @@
             line-height: 1.6;
         }
         
+        /* 隐藏 Netlify 广告 */
+        [data-netlify-identity-menu],
+        .netlify-identity-widget,
+        [class*="netlify"],
+        iframe[src*="netlify"],
+        div[class*="netlify-badge"],
+        a[href*="netlify.com"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            position: absolute !important;
+            left: -9999px !important;
+        }
+        
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -243,16 +257,7 @@
             color: #333;
         }
         
-        .preview-signature-img {
-            border: 1px solid #ddd;
-            padding: 10px;
-            max-width: 400px;
-            height: auto;
-            display: block;
-            margin: 10px 0;
-            background: white;
-        }
-        
+        .preview-signature-img,
         .company-seal-img {
             border: 1px solid #ddd;
             padding: 10px;
@@ -486,9 +491,6 @@
         let hasSignature = false;
         let formData = {};
         
-        // 회사 인장 이미지 데이터 (SVG로 생성)
-        const companySealsData = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%2295%22 fill=%22none%22 stroke=%22%23DC143C%22 stroke-width=%223%22/%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%2290%22 fill=%22none%22 stroke=%22%23DC143C%22 stroke-width=%222%22/%3E%3Ctext x=%22100%22 y=%2285%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2214%22 font-weight=%22bold%22 fill=%22%23DC143C%22 transform=%22rotate(-20 100 100)%22%3EENCCORE%3C/text%3E%3Ctext x=%22100%22 y=%22115%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2214%22 font-weight=%22bold%22 fill=%22%23DC143C%22 transform=%22rotate(20 100 100)%22%3EFILMS%3C/text%3E%3Ctext x=%22100%22 y=%2260%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2212%22 font-weight=%22bold%22 fill=%22%23DC143C%22%3EENCCE%3C/text%3E%3Ctext x=%22100%22 y=%22130%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2212%22 font-weight=%22bold%22 fill=%22%23DC143C%22%3EPTL%3C/text%3E%3C/svg%3E';
-        
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
             canvas.width = rect.width * window.devicePixelRatio;
@@ -700,7 +702,15 @@
                 <div style="margin-top: 20px; padding: 20px; border: 2px solid #333; border-radius: 8px; background: white;">
                     <p><strong>갑 (Encore Films Pte. Ltd.) 서명:</strong></p>
                     <p style="margin-top: 5px; color: #666; font-size: 12px;">대표자: 유경환</p>
-                    <p style="margin-top: 15px; color: #666;"><em>회사 인장 및 서명</em></p>
+                    
+                    <div style="margin-top: 15px;">
+                        <img src="./signature.png" class="company-seal-img" alt="대표자 서명" style="max-width: 150px;">
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <img src="./seal.png" class="company-seal-img" alt="회사 인장" style="max-width: 200px;">
+                    </div>
+                    
                     <p style="margin-top: 15px;"><strong>서명일:</strong> 2026년 11월 08일</p>
                 </div>
                 
