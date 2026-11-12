@@ -678,13 +678,20 @@
             
             const totalAmount = (formData.shares * 2300).toLocaleString();
             
+            // 获取当前实时日期
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const date = String(today.getDate()).padStart(2, '0');
+            const currentDate = `${year}년 ${month}월 ${date}일`;
+            
             const previewHTML = `
                 <h2>《귀란》숏드라마 투자 계약서</h2>
                 <p style="text-align: center; color: #666; margin-bottom: 20px;"><strong>공동투자 및 제작 계약</strong></p>
                 
                 <h3 style="margin-top: 20px;">계약 기본 정보</h3>
                 <p><strong>작품명:</strong> 《귀란》 (Ghost Orchid)</p>
-                <p><strong>계약일:</strong> 2026년 11월 08일</p>
+                <p><strong>계약일:</strong> ${currentDate}</p>
                 
                 <h3 style="margin-top: 20px;">갑 (판권 보유자) 정보</h3>
                 <p><strong>회사명:</strong> Encore Films Pte. Ltd.</p>
@@ -718,7 +725,7 @@
                         <img src="./seal.png" class="company-seal-img" alt="회사 인장" style="max-width: 200px;">
                     </div>
                     
-                    <p style="margin-top: 15px;"><strong>서명일:</strong> 2026년 11월 08일</p>
+                    <p style="margin-top: 15px;"><strong>서명일:</strong> ${currentDate}</p>
                 </div>
                 
                 <div style="margin-top: 20px; padding: 20px; border: 2px solid #333; border-radius: 8px; background: white;">
