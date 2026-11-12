@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[form]
+  [[form.fields]]
+    name = "representative"
+  [[form.fields]]
+    name = "idNumber"
+  [[form.fields]]
+    name = "address"
+  [[form.fields]]
+    name = "signature"
