@@ -200,6 +200,7 @@
             display: block;
             width: 100%;
             height: 200px;
+            touch-action: none;
         }
         
         .signature-controls {
@@ -414,7 +415,7 @@
             <p>대표자: 유경환</p>
             <p>연락처: +65 6742 5810</p>
             <p>주소: 18 Kaki Bukit Road 3, #02-20, Entrepreneur Business Centre, Singapore 415978</p>
-            <p>서명일: 2026년 11월 08일</p>
+            <p id="contractDateDisplay">서명일: </p>
         </div>
         
         <div class="start-button-container">
@@ -491,11 +492,28 @@
         let hasSignature = false;
         let formData = {};
         
+        // 获取实时日期函数
+        function getRealDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const date = String(today.getDate()).padStart(2, '0');
+            return `${year}년 ${month}월 ${date}일`;
+        }
+        
+        // 页面加载时显示实时日期
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('contractDateDisplay').textContent = '서명일: ' + getRealDate();
+        });
+        
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * window.devicePixelRatio;
-            canvas.height = rect.height * window.devicePixelRatio;
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            const dpr = window.devicePixelRatio || 1;
+            
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            
+            ctx.scale(dpr, dpr);
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
@@ -505,13 +523,16 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         
+        // 鼠标事件
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
-        canvas.addEventListener('touchstart', handleTouchStart);
-        canvas.addEventListener('touchmove', handleTouchMove);
-        canvas.addEventListener('touchend', stopDrawing);
+        
+        // 触摸事件（Safari和所有移动设备兼容）
+        canvas.addEventListener('touchstart', handleTouchStart, false);
+        canvas.addEventListener('touchmove', handleTouchMove, false);
+        canvas.addEventListener('touchend', stopDrawing, false);
         
         function startDrawing(e) {
             isDrawing = true;
@@ -538,6 +559,7 @@
         }
         
         function handleTouchStart(e) {
+            e.preventDefault();
             isDrawing = true;
             const rect = canvas.getBoundingClientRect();
             const touch = e.touches[0];
@@ -548,8 +570,8 @@
         }
         
         function handleTouchMove(e) {
-            if (!isDrawing) return;
             e.preventDefault();
+            if (!isDrawing) return;
             const rect = canvas.getBoundingClientRect();
             const touch = e.touches[0];
             const x = touch.clientX - rect.left;
@@ -570,11 +592,12 @@
             document.querySelector('.start-button-container').style.display = 'none';
             document.getElementById('formSection').style.display = 'block';
             
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const date = String(today.getDate()).padStart(2, '0');
-            document.getElementById('contractDate').value = `${year}년 ${month}월 ${date}일`;
+            document.getElementById('contractDate').value = getRealDate();
+            
+            // 确保canvas被正确加载后重新绘制
+            setTimeout(() => {
+                resizeCanvas();
+            }, 100);
         }
         
         function cancelSigning() {
@@ -677,13 +700,7 @@
             document.getElementById('successMessage').classList.add('active');
             
             const totalAmount = (formData.shares * 2300).toLocaleString();
-            
-            // 获取当前实时日期
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const date = String(today.getDate()).padStart(2, '0');
-            const currentDate = `${year}년 ${month}월 ${date}일`;
+            const currentDate = getRealDate();
             
             const previewHTML = `
                 <h2>《귀란》숏드라마 투자 계약서</h2>
