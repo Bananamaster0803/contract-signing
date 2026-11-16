@@ -384,7 +384,7 @@
             `;
             
             sortedRecords.forEach((record, index) => {
-                const totalAmount = (record.shares * 2300).toLocaleString();
+                const totalAmount = (record.shares * 2786).toLocaleString();
                 const date = new Date(record.timestamp).toLocaleDateString('ko-KR');
                 
                 tableHTML += `
@@ -412,7 +412,7 @@
         function updateStats() {
             const totalRecords = allRecords.length;
             const totalShares = allRecords.reduce((sum, r) => sum + parseInt(r.shares), 0);
-            const totalAmount = totalShares * 2300;
+            const totalAmount = totalShares * 2786;
             const avgShares = totalRecords > 0 ? (totalShares / totalRecords).toFixed(1) : 0;
             
             document.getElementById('statsGrid').innerHTML = `
@@ -469,7 +469,7 @@
         
         function viewDetails(index) {
             const record = filteredRecords[index];
-            const totalAmount = (record.shares * 2300).toLocaleString();
+            const totalAmount = (record.shares * 2786).toLocaleString();
             const date = new Date(record.timestamp).toLocaleString('ko-KR');
             
             document.getElementById('modalContent').innerHTML = `
@@ -520,7 +520,7 @@
             let csv = 'No,이름,전화번호,주소,인수주식,총금액(USD),서명일\n';
             
             filteredRecords.forEach((record, index) => {
-                const totalAmount = record.shares * 2300;
+                const totalAmount = record.shares * 2786;
                 const date = new Date(record.timestamp).toLocaleDateString('ko-KR');
                 csv += `${index + 1},"${record.name}","${record.phone}","${record.address}",${record.shares},${totalAmount},"${date}"\n`;
             });
