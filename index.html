@@ -338,7 +338,7 @@
             <h3>제3장 지분 인수 및 대금 지급 조건</h3>
             <p><strong>제3.1조 지분 총수 및 배분</strong></p>
             <p>3.1.1 갑은 을의 본 작품에 대한 투자 및 수익 배분의 근거로 본 작품의 수익과 관련된 지분 총 1,000주를 발행하는 데 동의한다.</p>
-            <p>3.1.2 주당 액면가 및 인수가격: 미화 2,300달러(USD 2,300)로 한다.</p>
+            <p>3.1.2 주당 액면가 및 인수가격: 미화 2,786달러(USD 2,786)로 한다.</p>
             
             <p><strong>제3.2조 지분 인도 및 증서 발급</strong></p>
             <p>3.2.1 갑은 을로부터 지분 인수대금 전액을 수령한 날로부터 5영업일 이내에 을에게 지분 인수 확인서 및 해당 수익권 증서를 발급해야 한다.</p>
@@ -486,11 +486,23 @@
     </div>
     
     <script>
+        // ★ 每股固定价格（USD）
+        const PRICE_PER_SHARE = 2786;
+        
         const canvas = document.getElementById('signaturePad');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
         let hasSignature = false;
+        let isSubmitting = false;
+        let lastCanvasWidth = 0;
         let formData = {};
+        
+        // 防止用户输入的内容被当成网页代码执行
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
         
         // 获取实时日期函数
         function getRealDate() {
@@ -508,6 +520,10 @@
         
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
+            // 画布隐藏时宽度为0；宽度没变（如手机地址栏收起）时不重置，避免签名被清空
+            if (rect.width === 0 || rect.width === lastCanvasWidth) return;
+            lastCanvasWidth = rect.width;
+            
             const dpr = window.devicePixelRatio || 1;
             
             canvas.width = rect.width * dpr;
@@ -518,6 +534,9 @@
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.strokeStyle = '#333';
+            
+            // 重设尺寸会清空画布，必须重新签名
+            hasSignature = false;
         }
         
         resizeCanvas();
@@ -637,10 +656,14 @@
             }
             
             const shares = document.getElementById('shares').value.trim();
+            const sharesNum = Number(shares);
             if (!shares) {
                 document.getElementById('sharesError').textContent = '인수 주식 수를 입력하세요';
                 isValid = false;
-            } else if (shares > 1000) {
+            } else if (!Number.isInteger(sharesNum) || sharesNum < 1) {
+                document.getElementById('sharesError').textContent = '1 이상의 정수를 입력하세요';
+                isValid = false;
+            } else if (sharesNum > 1000) {
                 document.getElementById('sharesError').textContent = '최대 1,000주까지 가능합니다';
                 isValid = false;
             } else {
@@ -658,16 +681,18 @@
         }
         
         async function submitForm() {
+            if (isSubmitting) return;          // 防止连点重复提交
             if (!validateForm()) return;
+            isSubmitting = true;
             
             const signatureDataURL = canvas.toDataURL('image/png');
             const timestamp = new Date().toISOString();
             
             const submitData = {
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value,
-                shares: document.getElementById('shares').value,
+                name: document.getElementById('name').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                shares: parseInt(document.getElementById('shares').value, 10),
                 date: document.getElementById('contractDate').value,
                 signature: signatureDataURL,
                 timestamp: timestamp
@@ -691,6 +716,8 @@
             } catch (error) {
                 console.error('Error:', error);
                 alert('제출 중 오류가 발생했습니다. 다시 시도해주세요.');
+            } finally {
+                isSubmitting = false;
             }
         }
         
@@ -699,8 +726,13 @@
             document.getElementById('previewSection').style.display = 'block';
             document.getElementById('successMessage').classList.add('active');
             
-            const totalAmount = (formData.shares * 2786).toLocaleString();
+            const totalAmount = (formData.shares * PRICE_PER_SHARE).toLocaleString();
+            const priceText = PRICE_PER_SHARE.toLocaleString();
             const currentDate = getRealDate();
+            const safeName = escapeHtml(formData.name);
+            const safePhone = escapeHtml(formData.phone);
+            const safeAddress = escapeHtml(formData.address);
+            const ratio = ((formData.shares / 1000) * 100).toFixed(2);
             
             const previewHTML = `
                 <h2>《귀란》숏드라마 투자 계약서</h2>
@@ -717,16 +749,16 @@
                 <p><strong>주소:</strong> 18 Kaki Bukit Road 3, #02-20, Entrepreneur Business Centre, Singapore 415978</p>
                 
                 <h3 style="margin-top: 20px;">을 (투자자) 정보</h3>
-                <p><strong>이름:</strong> ${formData.name}</p>
-                <p><strong>전화번호:</strong> ${formData.phone}</p>
-                <p><strong>주소:</strong> ${formData.address}</p>
-                <p><strong>인수 주식 수:</strong> ${formData.shares}주 (주당 USD 2,300)</p>
+                <p><strong>이름:</strong> ${safeName}</p>
+                <p><strong>전화번호:</strong> ${safePhone}</p>
+                <p><strong>주소:</strong> ${safeAddress}</p>
+                <p><strong>인수 주식 수:</strong> ${formData.shares}주 (주당 USD ${priceText})</p>
                 <p><strong>총 인수 금액:</strong> USD ${totalAmount}</p>
                 
                 <h3 style="margin-top: 20px;">지분 정보</h3>
                 <p><strong>총 발행 주식 수:</strong> 1,000주</p>
                 <p><strong>을이 인수하는 주식:</strong> ${formData.shares}주</p>
-                <p><strong>을의 지분 비율:</strong> ${((formData.shares / 1000) * 100).toFixed(2)}%</p>
+                <p><strong>을의 지분 비율:</strong> ${ratio}%</p>
                 
                 <h3 style="margin-top: 20px;">서명</h3>
                 
@@ -748,14 +780,14 @@
                 <div style="margin-top: 20px; padding: 20px; border: 2px solid #333; border-radius: 8px; background: white;">
                     <p><strong>을 (투자자) 서명:</strong></p>
                     <img src="${formData.signature}" class="preview-signature-img" alt="투자자 서명" style="max-height: 120px;">
-                    <p style="margin-top: 15px;"><strong>이름:</strong> ${formData.name}</p>
+                    <p style="margin-top: 15px;"><strong>이름:</strong> ${safeName}</p>
                     <p><strong>서명일:</strong> ${formData.date}</p>
                 </div>
                 
                 <div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 4px; border-left: 4px solid #667eea;">
                     <p style="font-size: 12px; color: #666;">
                         <strong>계약 내용:</strong><br>
-                        본 투자자(을)는 Encore Films Pte. Ltd. (갑)가 보유한 《귀란》 숏드라마에 대하여 총 ${formData.shares}주(지분 ${((formData.shares / 1000) * 100).toFixed(2)}%)를 USD ${totalAmount}에 인수합니다. 본 투자자는 본 작품의 순수익 중 인수한 지분 비율에 해당하는 수익을 배분받을 권리를 갖습니다.
+                        본 투자자(을)는 Encore Films Pte. Ltd. (갑)가 보유한 《귀란》 숏드라마에 대하여 총 ${formData.shares}주(지분 ${ratio}%)를 USD ${totalAmount}에 인수합니다. 본 투자자는 본 작품의 순수익 중 인수한 지분 비율에 해당하는 수익을 배분받을 권리를 갖습니다.
                     </p>
                 </div>
             `;
